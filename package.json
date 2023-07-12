@@ -1,0 +1,11 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "jacksonsr45 <jackson.severino.rocha@escola.pr.gov.br>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.4.1",
+    "typescript": "^5.1.6"
+  }
+}
