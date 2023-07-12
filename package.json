@@ -5,7 +5,7 @@
     "scripts": {
         "build": "tsc && tsc-alias",
         "start": "node dist/index.js",
-        "start:dev": "nodemon --watch 'src/' --exec 'ts-node -r tsconfig/register src/index.ts -e ts'",
+        "start:dev": "nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register src/index.ts -e ts'",
         "husky:prepare": "husky install",
         "test": "jest --passWithNoTests",
         "test:watch": "yarn test -- watch",
@@ -15,6 +15,7 @@
     "author": "jacksonsr45 <jackson.severino.rocha@escola.pr.gov.br>",
     "license": "MIT",
     "devDependencies": {
+        "@types/express": "^4.17.17",
         "@types/jest": "^29.5.3",
         "@types/node": "^20.4.1",
         "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -31,5 +32,8 @@
         "tsc-alias": "^1.8.7",
         "tsconfig-paths": "^4.2.0",
         "typescript": "^5.1.6"
+    },
+    "dependencies": {
+        "express": "^4.18.2"
     }
 }
