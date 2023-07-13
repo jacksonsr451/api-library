@@ -1,3 +1,6 @@
+import EmailAlreadyRegisteredByAnotherMemberError from "./erros/emailAlreadyRegisteredByAnotherMember"
+import EmailAlreadyRegisteredError from "./erros/emailAlreadyRegisteredError"
+import MemberNotFoundError from "./erros/memberNotFound"
 import Member from "./members"
 import MemberInterface from "./membersInterface"
 
@@ -10,7 +13,7 @@ class MemberRegistration {
 
     registerMember(member: Member): MemberInterface {
         if (this.isEmailAlreadyRegistered(member.email)) {
-            throw new Error("Email already registered.")
+            throw new EmailAlreadyRegisteredError()
         }
         this.members.push(member)
         return member
@@ -19,10 +22,10 @@ class MemberRegistration {
     updateMember(memberId: string, updatedMember: Member): MemberInterface {
         const index = this.findMemberIndexById(memberId)
         if (index === -1) {
-            throw new Error("Member not found.")
+            throw new MemberNotFoundError()
         }
         if (this.isEmailAlreadyRegistered(updatedMember.email, memberId)) {
-            throw new Error("Email already registered by another member.")
+            throw new EmailAlreadyRegisteredByAnotherMemberError()
         }
         this.members[index] = { ...this.members[index], ...updatedMember }
         return this.members[index]
@@ -31,7 +34,7 @@ class MemberRegistration {
     deleteMember(memberId: string): MemberInterface {
         const index = this.findMemberIndexById(memberId)
         if (index === -1) {
-            throw new Error("Member not found.")
+            throw new MemberNotFoundError()
         }
         const member = this.members[index]
         this.members.splice(index, 1)
