@@ -1,4 +1,4 @@
-import MemberInterface from "../interfaces/membersInterface"
+import MemberInterface from "./membersInterface"
 
 class Member implements MemberInterface {
     constructor(

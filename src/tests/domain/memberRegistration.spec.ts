@@ -1,5 +1,5 @@
-import Member from "@/domain/memberRegistration/entities/members"
-import MemberRegistration from "@/domain/memberRegistration/services/memberRegistration"
+import MemberRegistration from "@/domain/memberRegistration/memberRegistration"
+import Member from "@/domain/memberRegistration/members"
 
 describe("MemberRegistration", () => {
     let memberRegistration: MemberRegistration

@@ -1,5 +1,5 @@
-import Member from "../entities/members"
-import MemberInterface from "../interfaces/membersInterface"
+import Member from "./members"
+import MemberInterface from "./membersInterface"
 
 class MemberRegistration {
     private members: Member[]
