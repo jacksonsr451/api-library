@@ -1,6 +1,6 @@
-import LoanAlreadyReturnedError from "@/domain/loanManagement/erros/loanAlreadyReturnedError"
-import LoanNotFoundException from "@/domain/loanManagement/erros/loanNotFoundError"
-import MaterialAlreadyOnLoanError from "@/domain/loanManagement/erros/materialAlreadyOnLoanError"
+import LoanAlreadyReturnedError from "@/domain/loanManagement/errors/loanAlreadyReturnedError"
+import LoanNotFoundException from "@/domain/loanManagement/errors/loanNotFoundError"
+import MaterialAlreadyOnLoanError from "@/domain/loanManagement/errors/materialAlreadyOnLoanError"
 import LoanInterface from "@/domain/loanManagement/loanInterface"
 import LoanManagement from "@/domain/loanManagement/loanManagement"
 

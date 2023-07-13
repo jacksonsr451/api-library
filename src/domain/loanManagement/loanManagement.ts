@@ -1,8 +1,8 @@
 import { v4 } from "uuid"
 import LoanInterface from "./loanInterface"
-import MaterialAlreadyOnLoanError from "./erros/materialAlreadyOnLoanError"
-import LoanNotFoundException from "./erros/loanNotFoundError"
-import LoanAlreadyReturnedError from "./erros/loanAlreadyReturnedError"
+import MaterialAlreadyOnLoanError from "./errors/materialAlreadyOnLoanError"
+import LoanNotFoundException from "./errors/loanNotFoundError"
+import LoanAlreadyReturnedError from "./errors/loanAlreadyReturnedError"
 
 class LoanManagement {
     private loans: LoanInterface[]

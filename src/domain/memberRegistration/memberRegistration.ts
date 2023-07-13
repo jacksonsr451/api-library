@@ -1,6 +1,6 @@
-import EmailAlreadyRegisteredByAnotherMemberError from "./erros/emailAlreadyRegisteredByAnotherMember"
-import EmailAlreadyRegisteredError from "./erros/emailAlreadyRegisteredError"
-import MemberNotFoundError from "./erros/memberNotFound"
+import EmailAlreadyRegisteredByAnotherMemberError from "./errors/emailAlreadyRegisteredByAnotherMember"
+import EmailAlreadyRegisteredError from "./errors/emailAlreadyRegisteredError"
+import MemberNotFoundError from "./errors/memberNotFound"
 import Member from "./members"
 import MemberInterface from "./membersInterface"
 
