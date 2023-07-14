@@ -2,3 +2,4 @@ node_modules
 coverage
 dist
 libssl1.*
+.env

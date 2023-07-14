@@ -1,8 +1,8 @@
 import { MongoClient, Db } from "mongodb"
 
 class Database {
-    private static url: string = "mongodb://localhost:27017"
-    private static dbName: string = "seu_banco_de_dados"
+    private static url: string = process.env.MONGODB_URL ?? ""
+    private static dbName: string = process.env.MONGODB_DB_NAME ?? ""
     private static client: MongoClient
     private static db: Db
 
