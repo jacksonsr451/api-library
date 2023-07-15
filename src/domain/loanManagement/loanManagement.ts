@@ -1,8 +1,8 @@
-import { v4 } from "uuid"
 import MaterialAlreadyOnLoanError from "./errors/materialAlreadyOnLoanError"
 import LoanNotFoundException from "./errors/loanNotFoundError"
 import LoanAlreadyReturnedError from "./errors/loanAlreadyReturnedError"
 import Loan from "./loan"
+import { ObjectId } from "mongodb"
 
 class LoanManagement {
     private loans: Loan[]
@@ -58,7 +58,7 @@ class LoanManagement {
     }
 
     private generateLoanId(): string {
-        return v4()
+        return new ObjectId().toHexString()
     }
 }
 
