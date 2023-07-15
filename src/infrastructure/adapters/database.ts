@@ -19,6 +19,7 @@ class Database {
     }
 
     public static getDatabase(): Db {
+        this.connect()
         return this.db
     }
 
