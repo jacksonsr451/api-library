@@ -12,7 +12,10 @@ class LoanRepository implements LoanRepositoryInterface {
 
     async create(loan: Loan): Promise<LoanModel> {
         const result: InsertOneResult<LoanModel> =
-            await this.collection.insertOne({ ...loan })
+            await this.collection.insertOne({
+                ...loan,
+                _id: new ObjectId(loan.id),
+            })
         return { ...loan, _id: result.insertedId } as LoanModel
     }
 
