@@ -16,12 +16,7 @@ class MaterialRepository implements MaterialRepositoryInterface {
 
     async create(material: Material): Promise<MaterialModel> {
         const result: InsertOneResult<MaterialModel> =
-            await this.collection.insertOne({
-                id: material.id,
-                title: material.title,
-                author: material.author,
-                type: material.type,
-            })
+            await this.collection.insertOne(material)
         return {
             ...material,
             id: result.insertedId.toString(),
