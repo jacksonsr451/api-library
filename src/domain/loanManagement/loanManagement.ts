@@ -1,31 +1,27 @@
 import { v4 } from "uuid"
-import LoanInterface from "./loanInterface"
 import MaterialAlreadyOnLoanError from "./errors/materialAlreadyOnLoanError"
 import LoanNotFoundException from "./errors/loanNotFoundError"
 import LoanAlreadyReturnedError from "./errors/loanAlreadyReturnedError"
+import Loan from "./loan"
 
 class LoanManagement {
-    private loans: LoanInterface[]
+    private loans: Loan[]
 
-    constructor(loans: LoanInterface[]) {
+    constructor(loans: Loan[]) {
         this.loans = loans
     }
 
-    getLoans(): LoanInterface[] {
+    getLoans(): Loan[] {
         return this.loans
     }
 
-    loanMaterial(
-        memberId: string,
-        materialId: string,
-        dueDate: Date,
-    ): LoanInterface {
+    loanMaterial(memberId: string, materialId: string, dueDate: Date): Loan {
         const existingLoan = this.findActiveLoanByMaterialId(materialId)
         if (existingLoan) {
             throw new MaterialAlreadyOnLoanError()
         }
 
-        const loan: LoanInterface = {
+        const loan: Loan = {
             id: this.generateLoanId(),
             memberId,
             materialId,
@@ -37,7 +33,7 @@ class LoanManagement {
         return loan
     }
 
-    returnMaterial(loanId: string): LoanInterface {
+    returnMaterial(loanId: string): Loan {
         const loan = this.findLoanById(loanId)
         if (!loan) {
             throw new LoanNotFoundException()
@@ -51,13 +47,13 @@ class LoanManagement {
         return loan
     }
 
-    findActiveLoanByMaterialId(materialId: string): LoanInterface | undefined {
+    findActiveLoanByMaterialId(materialId: string): Loan | undefined {
         return this.loans.find(
             (loan) => loan.materialId === materialId && !loan.returned,
         )
     }
 
-    findLoanById(loanId: string): LoanInterface | undefined {
+    findLoanById(loanId: string): Loan | undefined {
         return this.loans.find((loan) => loan.id === loanId)
     }
 

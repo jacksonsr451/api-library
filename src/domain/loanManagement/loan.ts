@@ -1,13 +1,9 @@
-import LoanInterface from "./loanInterface"
-
-class Loan implements LoanInterface {
-    constructor(
-        public readonly id: string,
-        public readonly memberId: string,
-        public readonly materialId: string,
-        public readonly dueDate: Date,
-        public returned: boolean,
-    ) {}
+interface Loan {
+    id: string
+    memberId: string
+    materialId: string
+    dueDate: Date
+    returned: boolean
 }
 
 export default Loan

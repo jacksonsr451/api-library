@@ -1,12 +1,12 @@
 import LoanAlreadyReturnedError from "@/domain/loanManagement/errors/loanAlreadyReturnedError"
 import LoanNotFoundException from "@/domain/loanManagement/errors/loanNotFoundError"
 import MaterialAlreadyOnLoanError from "@/domain/loanManagement/errors/materialAlreadyOnLoanError"
-import LoanInterface from "@/domain/loanManagement/loanInterface"
+import Loan from "@/domain/loanManagement/loan"
 import LoanManagement from "@/domain/loanManagement/loanManagement"
 
 describe("LoanManagement", () => {
     let loanManagement: LoanManagement
-    let loans: LoanInterface[]
+    let loans: Loan[]
 
     beforeEach(() => {
         loans = [
