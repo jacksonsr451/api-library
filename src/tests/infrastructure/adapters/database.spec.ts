@@ -11,7 +11,7 @@ describe("Database", () => {
 
         mockClient = await MongoClient.connect(mongoUri)
         mockDb = mockClient.db(dbName)
-        Database.getDatabase = jest.fn(() => mockDb)
+        Database.getDatabase = jest.fn(async () => mockDb)
     })
 
     afterAll(async () => {
@@ -29,8 +29,8 @@ describe("Database", () => {
         )
     })
 
-    it("should get the database", () => {
-        const result = Database.getDatabase()
+    it("should get the database", async () => {
+        const result = await Database.getDatabase()
         expect(result).toBe(mockDb)
     })
 
