@@ -16,10 +16,13 @@ class MaterialRepository implements MaterialRepositoryInterface {
 
     async create(material: Material): Promise<MaterialModel> {
         const result: InsertOneResult<MaterialModel> =
-            await this.collection.insertOne(material)
+            await this.collection.insertOne({
+                ...material,
+                _id: new ObjectId(material.id),
+            })
         return {
             ...material,
-            id: result.insertedId.toString(),
+            _id: result.insertedId,
         } as MaterialModel
     }
 

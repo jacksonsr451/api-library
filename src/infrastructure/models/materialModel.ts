@@ -1,5 +1,5 @@
 interface MaterialModel {
-    id: string
+    id?: string
     title: string
     author: string
     type: string
