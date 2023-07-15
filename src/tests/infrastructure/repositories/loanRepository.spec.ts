@@ -57,8 +57,6 @@ describe("LoanRepository", () => {
 
             const createdLoan: LoanModel = await loanRepository.create(loan)
 
-            console.log(createdLoan.id)
-
             const fetchedLoan: LoanModel | null = await loanRepository.getById(
                 createdLoan.id,
             )
