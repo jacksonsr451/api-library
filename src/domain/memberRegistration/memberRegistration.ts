@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb"
 import EmailAlreadyRegisteredByAnotherMemberError from "./errors/emailAlreadyRegisteredByAnotherMember"
 import EmailAlreadyRegisteredError from "./errors/emailAlreadyRegisteredError"
 import MemberNotFoundError from "./errors/memberNotFound"
@@ -14,8 +15,16 @@ class MemberRegistration {
         if (this.isEmailAlreadyRegistered(member.email)) {
             throw new EmailAlreadyRegisteredError()
         }
-        this.members.push(member)
-        return member
+
+        const newMember: Member = {
+            id: this.getId(),
+            name: member.name,
+            address: member.address,
+            email: member.email,
+        }
+
+        this.members.push(newMember)
+        return newMember
     }
 
     updateMember(memberId: string, updatedMember: Member): Member {
@@ -46,6 +55,10 @@ class MemberRegistration {
 
     getMembers(): Member[] {
         return this.members
+    }
+
+    private getId(): string {
+        return new ObjectId().toHexString()
     }
 
     private isEmailAlreadyRegistered(

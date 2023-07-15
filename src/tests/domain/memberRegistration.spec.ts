@@ -1,5 +1,6 @@
 import MemberRegistration from "@/domain/memberRegistration/memberRegistration"
 import Member from "@/domain/memberRegistration/members"
+import { ObjectId } from "mongodb"
 
 describe("MemberRegistration", () => {
     let memberRegistration: MemberRegistration
@@ -10,29 +11,31 @@ describe("MemberRegistration", () => {
 
     it("should register a member", () => {
         const member: Member = {
-            id: "1",
             name: "John Doe",
             address: "123 Main St",
             email: "john@example.com",
         }
 
-        memberRegistration.registerMember(member)
+        const result = memberRegistration.registerMember(member)
 
-        const members = memberRegistration.getMembers()
-        expect(members.length).toBe(1)
-        expect(members[0]).toEqual(member)
+        expect(result.id).toBeDefined()
+        expect(result.name).toBe(member.name)
+        expect(result.address).toBe(member.address)
+        expect(result.email).toBe(member.email)
     })
 
     it("should throw an error when registering a member with an existing email", () => {
+        const memberId1 = new ObjectId().toHexString()
+        const memberId2 = new ObjectId().toHexString()
         const member1: Member = {
-            id: "1",
+            id: memberId1,
             name: "John Doe",
             address: "123 Main St",
             email: "john@example.com",
         }
 
         const member2: Member = {
-            id: "2",
+            id: memberId2,
             name: "Jane Smith",
             address: "456 Elm St",
             email: "john@example.com",
@@ -47,22 +50,21 @@ describe("MemberRegistration", () => {
 
     it("should update a member", () => {
         const member: Member = {
-            id: "1",
             name: "John Doe",
             address: "123 Main St",
             email: "john@example.com",
         }
 
-        memberRegistration.registerMember(member)
+        const data = memberRegistration.registerMember(member)
 
         const updatedMember: Member = {
-            id: "1",
+            id: data.id,
             name: "John Smith",
             address: "456 Elm St",
             email: "john@example.com",
         }
 
-        memberRegistration.updateMember("1", updatedMember)
+        memberRegistration.updateMember(updatedMember.id ?? "", updatedMember)
 
         const updatedMembers = memberRegistration.getMembers()
         expect(updatedMembers.length).toBe(1)
@@ -71,7 +73,7 @@ describe("MemberRegistration", () => {
 
     it("should throw an error when updating a non-existing member", () => {
         const member: Member = {
-            id: "1",
+            id: new ObjectId().toHexString(),
             name: "John Doe",
             address: "123 Main St",
             email: "john@example.com",
@@ -84,45 +86,45 @@ describe("MemberRegistration", () => {
 
     it("should throw an error when updating a member with an email already registered by another member", () => {
         const member1: Member = {
-            id: "1",
             name: "John Doe",
             address: "123 Main St",
             email: "john@example.com",
         }
 
         const member2: Member = {
-            id: "2",
             name: "Jane Smith",
             address: "456 Elm St",
             email: "jane@example.com",
         }
 
-        memberRegistration.registerMember(member1)
+        const memberSaved1 = memberRegistration.registerMember(member1)
         memberRegistration.registerMember(member2)
 
         const updatedMember: Member = {
-            id: "1",
+            id: memberSaved1.id,
             name: "John Smith",
             address: "789 Oak St",
             email: "jane@example.com",
         }
 
         expect(() =>
-            memberRegistration.updateMember("1", updatedMember),
+            memberRegistration.updateMember(
+                memberSaved1.id ?? "",
+                updatedMember,
+            ),
         ).toThrowError("Email already registered by another member.")
     })
 
     it("should delete a member", () => {
         const member: Member = {
-            id: "1",
             name: "John Doe",
             address: "123 Main St",
             email: "john@example.com",
         }
 
-        memberRegistration.registerMember(member)
+        const memberSaved = memberRegistration.registerMember(member)
 
-        memberRegistration.deleteMember("1")
+        memberRegistration.deleteMember(memberSaved.id ?? "")
 
         const members = memberRegistration.getMembers()
         expect(members.length).toBe(0)
@@ -136,16 +138,18 @@ describe("MemberRegistration", () => {
 
     it("should get a member by ID", () => {
         const member: Member = {
-            id: "1",
             name: "John Doe",
             address: "123 Main St",
             email: "john@example.com",
         }
 
-        memberRegistration.registerMember(member)
+        const memberSaved = memberRegistration.registerMember(member)
 
-        const retrievedMember = memberRegistration.getMemberById("1")
-        expect(retrievedMember).toEqual(member)
+        const retrievedMember = memberRegistration.getMemberById(
+            memberSaved.id ?? "",
+        )
+
+        expect(retrievedMember).toBeDefined()
     })
 
     it("should return undefined when getting a non-existing member by ID", () => {

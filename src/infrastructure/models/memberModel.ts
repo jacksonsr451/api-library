@@ -1,5 +1,5 @@
 interface MemberModel {
-    id: string
+    id?: string
     name: string
     address: string
     email: string
