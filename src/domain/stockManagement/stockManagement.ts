@@ -1,15 +1,15 @@
 import ProductAlreadyExistsInStockError from "./errors/productAlreadyExistsInStockError"
 import ProductNotFoundInStockError from "./errors/productNotFoundInStockError"
-import ProductInterface from "./productInterface"
+import Product from "./product"
 
 class StockManagement {
-    private stock: ProductInterface[]
+    private stock: Product[]
 
-    constructor(stock: ProductInterface[]) {
+    constructor(stock: Product[]) {
         this.stock = stock
     }
 
-    addProduct(product: ProductInterface): ProductInterface {
+    addProduct(product: Product): Product {
         if (this.isProductAlreadyExists(product.id)) {
             throw new ProductAlreadyExistsInStockError()
         }
@@ -17,7 +17,7 @@ class StockManagement {
         return product
     }
 
-    removeProduct(productId: string): ProductInterface {
+    removeProduct(productId: string): Product {
         const index = this.findProductIndexById(productId)
         if (index === -1) {
             throw new ProductNotFoundInStockError()
@@ -27,10 +27,7 @@ class StockManagement {
         return product
     }
 
-    updateProductQuantity(
-        productId: string,
-        quantity: number,
-    ): ProductInterface {
+    updateProductQuantity(productId: string, quantity: number): Product {
         const product = this.findProductById(productId)
         if (!product) {
             throw new ProductNotFoundInStockError()
@@ -39,7 +36,7 @@ class StockManagement {
         return product
     }
 
-    updateProductPrice(productId: string, price: number): ProductInterface {
+    updateProductPrice(productId: string, price: number): Product {
         const product = this.findProductById(productId)
         if (!product) {
             throw new ProductNotFoundInStockError()
@@ -48,11 +45,11 @@ class StockManagement {
         return product
     }
 
-    getProductById(productId: string): ProductInterface | undefined {
+    getProductById(productId: string): Product | undefined {
         return this.stock.find((product) => product.id === productId)
     }
 
-    getProducts(): ProductInterface[] {
+    getProducts(): Product[] {
         return this.stock
     }
 
@@ -64,7 +61,7 @@ class StockManagement {
         return this.stock.findIndex((product) => product.id === productId)
     }
 
-    private findProductById(productId: string): ProductInterface | undefined {
+    private findProductById(productId: string): Product | undefined {
         return this.stock.find((product) => product.id === productId)
     }
 }

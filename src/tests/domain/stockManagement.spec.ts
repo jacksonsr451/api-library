@@ -1,11 +1,11 @@
 import ProductAlreadyExistsInStockError from "@/domain/stockManagement/errors/productAlreadyExistsInStockError"
 import ProductNotFoundInStockError from "@/domain/stockManagement/errors/productNotFoundInStockError"
-import ProductInterface from "@/domain/stockManagement/productInterface"
+import Product from "@/domain/stockManagement/product"
 import StockManagement from "@/domain/stockManagement/stockManagement"
 
 describe("StockManagement", () => {
     let stockManagement: StockManagement
-    let products: ProductInterface[]
+    let products: Product[]
 
     beforeEach(() => {
         products = [
@@ -16,7 +16,7 @@ describe("StockManagement", () => {
     })
 
     it("should add a product to the stock", () => {
-        const product: ProductInterface = {
+        const product: Product = {
             id: "3",
             name: "Product 3",
             quantity: 3,
@@ -33,7 +33,7 @@ describe("StockManagement", () => {
     })
 
     it("should throw an error when adding a product that already exists in the stock", () => {
-        const product: ProductInterface = {
+        const product: Product = {
             id: "1",
             name: "Product 1",
             quantity: 10,

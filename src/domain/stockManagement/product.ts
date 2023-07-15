@@ -1,12 +1,8 @@
-import ProductInterface from "./productInterface"
-
-class Product implements ProductInterface {
-    constructor(
-        public readonly id: string,
-        public readonly name: string,
-        public quantity: number,
-        public price: number,
-    ) {}
+interface Product {
+    id: string
+    name: string
+    quantity: number
+    price: number
 }
 
 export default Product
