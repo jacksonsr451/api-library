@@ -1,5 +1,5 @@
 interface Loan {
-    id: string
+    id?: string
     memberId: string
     materialId: string
     dueDate: Date

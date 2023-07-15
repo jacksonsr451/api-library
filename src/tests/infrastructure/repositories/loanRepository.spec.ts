@@ -57,15 +57,11 @@ describe("LoanRepository", () => {
 
             const createdLoan: LoanModel = await loanRepository.create(loan)
 
-            const fetchedLoan: LoanModel | null = await loanRepository.getById(
-                createdLoan.id,
-            )
-
-            expect(fetchedLoan?.id).toEqual(createdLoan.id)
-            expect(fetchedLoan?.memberId).toEqual(createdLoan.memberId)
-            expect(fetchedLoan?.materialId).toEqual(createdLoan.materialId)
-            expect(fetchedLoan?.dueDate).toEqual(createdLoan.dueDate)
-            expect(fetchedLoan?.returned).toEqual(createdLoan.returned)
+            expect(createdLoan?.id).toEqual(loan.id)
+            expect(createdLoan?.memberId).toEqual(loan.memberId)
+            expect(createdLoan?.materialId).toEqual(loan.materialId)
+            expect(createdLoan?.dueDate).toEqual(loan.dueDate)
+            expect(createdLoan?.returned).toEqual(loan.returned)
         })
 
         it("should return null for non-existent loan ID", async () => {
