@@ -1,10 +1,10 @@
 import Catalog from "@/domain/catalog/catalog"
 import MaterialNotFound from "@/domain/catalog/errors/materialNotFound"
-import MaterialInterface from "@/domain/catalog/materialInterface"
+import Material from "@/domain/catalog/material"
 
 describe("Catalog", () => {
     let catalog: Catalog
-    let materials: MaterialInterface[]
+    let materials: Material[]
 
     beforeEach(() => {
         materials = [
@@ -26,7 +26,7 @@ describe("Catalog", () => {
     })
 
     it("should add a material to the catalog", () => {
-        const material: MaterialInterface = {
+        const material: Material = {
             id: "4",
             title: "Book 3",
             author: "Author 4",

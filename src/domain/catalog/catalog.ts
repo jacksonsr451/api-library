@@ -1,23 +1,23 @@
 import MaterialNotFound from "./errors/materialNotFound"
-import MaterialInterface from "./materialInterface"
+import Material from "./material"
 
 class Catalog {
-    private materials: MaterialInterface[]
+    private materials: Material[]
 
-    constructor(materials: MaterialInterface[]) {
+    constructor(materials: Material[]) {
         this.materials = materials
     }
 
-    getMaterials(): MaterialInterface[] {
+    getMaterials(): Material[] {
         return this.materials
     }
 
-    addMaterial(material: MaterialInterface): MaterialInterface {
+    addMaterial(material: Material): Material {
         this.materials.push(material)
         return material
     }
 
-    removeMaterial(materialId: string): MaterialInterface {
+    removeMaterial(materialId: string): Material {
         const index = this.findMaterialIndexById(materialId)
         if (index === -1) {
             throw new MaterialNotFound()
@@ -27,35 +27,35 @@ class Catalog {
         return material
     }
 
-    findMaterialById(materialId: string): MaterialInterface | undefined {
+    findMaterialById(materialId: string): Material | undefined {
         return this.materials.find((material) => material.id === materialId)
     }
 
-    findMaterialsByType(type: string): MaterialInterface[] {
+    findMaterialsByType(type: string): Material[] {
         return this.materials.filter((material) => material.type === type)
     }
 
-    findMaterialsByTitle(title: string): MaterialInterface[] {
+    findMaterialsByTitle(title: string): Material[] {
         const searchTitle = title.toLowerCase()
         return this.materials.filter((material) =>
             material.title.toLowerCase().includes(searchTitle),
         )
     }
 
-    findMaterialsByAuthor(author: string): MaterialInterface[] {
+    findMaterialsByAuthor(author: string): Material[] {
         const searchAuthor = author.toLowerCase()
         return this.materials.filter((material) =>
             material.author.toLowerCase().includes(searchAuthor),
         )
     }
 
-    sortMaterialsByTitle(): MaterialInterface[] {
+    sortMaterialsByTitle(): Material[] {
         return this.materials
             .slice()
             .sort((a, b) => a.title.localeCompare(b.title))
     }
 
-    sortMaterialsByAuthor(): MaterialInterface[] {
+    sortMaterialsByAuthor(): Material[] {
         return this.materials
             .slice()
             .sort((a, b) => a.author.localeCompare(b.author))
