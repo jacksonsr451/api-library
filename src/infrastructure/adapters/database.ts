@@ -1,8 +1,10 @@
 import { MongoClient, Db } from "mongodb"
 
 class Database {
-    private static url: string = process.env.MONGODB_URL ?? ""
-    private static dbName: string = process.env.MONGODB_DB_NAME ?? ""
+    private static url: string =
+        process.env.MONGODB_URL ?? "mongodb://127.0.0.1:27017"
+    private static dbName: string =
+        process.env.MONGODB_DB_NAME ?? "library_tests"
     private static client: MongoClient
     private static db: Db
 
