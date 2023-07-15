@@ -1,17 +1,31 @@
 import Catalog from "@/domain/catalog/catalog"
 import MaterialNotFound from "@/domain/catalog/errors/materialNotFound"
 import Material from "@/domain/catalog/material"
+import { ObjectId } from "mongodb"
 
 describe("Catalog", () => {
     let catalog: Catalog
     let materials: Material[]
+    const materialId1: string = new ObjectId().toHexString()
+    const materialId2: string = new ObjectId().toHexString()
+    const materialId3: string = new ObjectId().toHexString()
 
     beforeEach(() => {
         materials = [
-            { id: "1", title: "Book 1", author: "Author 1", type: "Book" },
-            { id: "2", title: "Book 2", author: "Author 2", type: "Book" },
             {
-                id: "3",
+                id: materialId1,
+                title: "Book 1",
+                author: "Author 1",
+                type: "Book",
+            },
+            {
+                id: materialId2,
+                title: "Book 2",
+                author: "Author 2",
+                type: "Book",
+            },
+            {
+                id: materialId3,
                 title: "Magazine 1",
                 author: "Author 3",
                 type: "Magazine",
@@ -27,7 +41,6 @@ describe("Catalog", () => {
 
     it("should add a material to the catalog", () => {
         const material: Material = {
-            id: "4",
             title: "Book 3",
             author: "Author 4",
             type: "Book",
@@ -35,17 +48,16 @@ describe("Catalog", () => {
 
         const addedMaterial = catalog.addMaterial(material)
 
-        expect(addedMaterial).toEqual(material)
+        expect(addedMaterial.title).toEqual(material.title)
+        expect(addedMaterial.author).toEqual(material.author)
+        expect(addedMaterial.type).toEqual(material.type)
 
         const updatedMaterials = catalog.getMaterials()
         expect(updatedMaterials.length).toBe(materials.length)
-        expect(updatedMaterials[updatedMaterials.length - 1]).toEqual(material)
     })
 
     it("should remove a material from the catalog", () => {
-        const materialId = "1"
-
-        catalog.removeMaterial(materialId)
+        catalog.removeMaterial(materialId1)
 
         const updatedMaterials = catalog.getMaterials()
         expect(updatedMaterials.length).toBe(2)
@@ -54,7 +66,7 @@ describe("Catalog", () => {
     })
 
     it("should throw an error when removing a non-existing material", () => {
-        const materialId = "4"
+        const materialId = new ObjectId().toHexString()
 
         expect(() => catalog.removeMaterial(materialId)).toThrowError(
             MaterialNotFound,
@@ -62,15 +74,13 @@ describe("Catalog", () => {
     })
 
     it("should find a material by ID", () => {
-        const materialId = "2"
-
-        const foundMaterial = catalog.findMaterialById(materialId)
+        const foundMaterial = catalog.findMaterialById(materialId2)
 
         expect(foundMaterial).toEqual(materials[1])
     })
 
     it("should return undefined when finding a non-existing material by ID", () => {
-        const materialId = "4"
+        const materialId = new ObjectId().toHexString()
 
         const foundMaterial = catalog.findMaterialById(materialId)
 

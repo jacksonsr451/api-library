@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb"
 import MaterialNotFound from "./errors/materialNotFound"
 import Material from "./material"
 
@@ -13,8 +14,15 @@ class Catalog {
     }
 
     addMaterial(material: Material): Material {
-        this.materials.push(material)
-        return material
+        const newMaterial: Material = {
+            id: this.getId(),
+            title: material.title,
+            author: material.author,
+            type: material.type,
+        }
+
+        this.materials.push(newMaterial)
+        return newMaterial
     }
 
     removeMaterial(materialId: string): Material {
@@ -59,6 +67,10 @@ class Catalog {
         return this.materials
             .slice()
             .sort((a, b) => a.author.localeCompare(b.author))
+    }
+
+    private getId(): string {
+        return new ObjectId().toHexString()
     }
 
     private findMaterialIndexById(materialId: string): number {
