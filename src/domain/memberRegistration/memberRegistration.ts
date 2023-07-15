@@ -2,7 +2,6 @@ import EmailAlreadyRegisteredByAnotherMemberError from "./errors/emailAlreadyReg
 import EmailAlreadyRegisteredError from "./errors/emailAlreadyRegisteredError"
 import MemberNotFoundError from "./errors/memberNotFound"
 import Member from "./members"
-import MemberInterface from "./membersInterface"
 
 class MemberRegistration {
     private members: Member[]
@@ -11,7 +10,7 @@ class MemberRegistration {
         this.members = members
     }
 
-    registerMember(member: Member): MemberInterface {
+    registerMember(member: Member): Member {
         if (this.isEmailAlreadyRegistered(member.email)) {
             throw new EmailAlreadyRegisteredError()
         }
@@ -19,7 +18,7 @@ class MemberRegistration {
         return member
     }
 
-    updateMember(memberId: string, updatedMember: Member): MemberInterface {
+    updateMember(memberId: string, updatedMember: Member): Member {
         const index = this.findMemberIndexById(memberId)
         if (index === -1) {
             throw new MemberNotFoundError()
@@ -31,7 +30,7 @@ class MemberRegistration {
         return this.members[index]
     }
 
-    deleteMember(memberId: string): MemberInterface {
+    deleteMember(memberId: string): Member {
         const index = this.findMemberIndexById(memberId)
         if (index === -1) {
             throw new MemberNotFoundError()
@@ -41,11 +40,11 @@ class MemberRegistration {
         return member
     }
 
-    getMemberById(memberId: string): MemberInterface | undefined {
+    getMemberById(memberId: string): Member | undefined {
         return this.members.find((member) => member.id === memberId)
     }
 
-    getMembers(): MemberInterface[] {
+    getMembers(): Member[] {
         return this.members
     }
 
