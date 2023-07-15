@@ -18,8 +18,8 @@ class Database {
         }
     }
 
-    public static getDatabase(): Db {
-        this.connect()
+    public static async getDatabase(): Promise<Db> {
+        await this.connect()
         return this.db
     }
 
