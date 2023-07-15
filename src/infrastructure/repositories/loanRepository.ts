@@ -7,7 +7,7 @@ class LoanRepository implements LoanRepositoryInterface {
     private collection: Collection<LoanModel>
 
     constructor(db: Db) {
-        this.collection = db.collection<LoanModel>("materials")
+        this.collection = db.collection<LoanModel>("loans")
     }
 
     async create(loan: Loan): Promise<LoanModel> {
