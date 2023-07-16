@@ -11,15 +11,18 @@ class MemberRepository implements MemberRepositoryInterface {
     }
 
     async create(member: Member): Promise<MemberModel> {
-        const result = await this.collection.insertOne(member)
+        const result = await this.collection.insertOne({
+            ...member,
+            _id: new ObjectId(member.id),
+        })
         return { ...member, _id: result.insertedId } as MemberModel
     }
 
     async update(member: Member): Promise<MemberModel | null> {
         const filter = { _id: new ObjectId(member.id) }
-        const update = { $set: member }
-        const result = await this.collection.findOneAndUpdate(filter, update)
-        return result.value
+        const update = { $set: { ...member } }
+        await this.collection.findOneAndUpdate(filter, update)
+        return await this.collection.findOne(filter)
     }
 
     async delete(id: string): Promise<boolean> {
@@ -33,7 +36,7 @@ class MemberRepository implements MemberRepositoryInterface {
         return this.collection.findOne({ _id: new ObjectId(id) })
     }
 
-    getAll(): Promise<MemberModel[]> {
+    show(): Promise<MemberModel[]> {
         return this.collection.find().toArray()
     }
 }

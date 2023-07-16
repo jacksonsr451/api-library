@@ -6,7 +6,7 @@ interface MemberRepositoryInterface {
     update(member: Member): Promise<MemberModel | null>
     delete(id: string): Promise<boolean>
     get(id: string): Promise<MemberModel | null>
-    getAll(): Promise<MemberModel[]>
+    show(): Promise<MemberModel[]>
 }
 
 export default MemberRepositoryInterface
