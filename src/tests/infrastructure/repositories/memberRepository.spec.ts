@@ -4,7 +4,7 @@ import MemberModel from "@/infrastructure/models/memberModel"
 import MemberRepository from "@/infrastructure/repositories/memberRepository"
 import { Collection, Db, ObjectId } from "mongodb"
 
-describe("MaterialRepository", () => {
+describe("MemberRepository", () => {
     let db: Db
     let collection: Collection<MemberModel>
     let memberRepository: MemberRepository

@@ -7,7 +7,7 @@ class ProductRepository implements ProductRepositoryInterface {
     private collection: Collection<ProductModel>
 
     constructor(db: Db) {
-        this.collection = db.collection<ProductModel>("members")
+        this.collection = db.collection<ProductModel>("products")
     }
 
     async create(product: Product): Promise<ProductModel> {
@@ -20,16 +20,16 @@ class ProductRepository implements ProductRepositoryInterface {
 
     async update(product: Product): Promise<ProductModel | null> {
         const filter = { _id: new ObjectId(product.id) }
-        const update = { $set: product }
+        const update = { $set: { ...product } }
         await this.collection.findOneAndUpdate(filter, update)
-        return this.collection.findOne({ _id: new ObjectId(product.id) })
+        return await this.collection.findOne(filter)
     }
 
     async get(id: string): Promise<ProductModel | null> {
         return this.collection.findOne({ _id: new ObjectId(id) })
     }
 
-    getAll(): Promise<ProductModel[]> {
+    show(): Promise<ProductModel[]> {
         return this.collection.find().toArray()
     }
 }

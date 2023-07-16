@@ -5,7 +5,7 @@ interface ProductRepositoryInterface {
     create(product: Product): Promise<ProductModel>
     update(product: Product): Promise<ProductModel | null>
     get(id: string): Promise<ProductModel | null>
-    getAll(): Promise<ProductModel[]>
+    show(): Promise<ProductModel[]>
 }
 
 export default ProductRepositoryInterface
