@@ -11,15 +11,18 @@ class ProductRepository implements ProductRepositoryInterface {
     }
 
     async create(product: Product): Promise<ProductModel> {
-        const result = await this.collection.insertOne(product)
+        const result = await this.collection.insertOne({
+            ...product,
+            _id: new ObjectId(product.id),
+        })
         return { ...product, _id: result.insertedId } as ProductModel
     }
 
     async update(product: Product): Promise<ProductModel | null> {
         const filter = { _id: new ObjectId(product.id) }
         const update = { $set: product }
-        const result = await this.collection.findOneAndUpdate(filter, update)
-        return result.value
+        await this.collection.findOneAndUpdate(filter, update)
+        return this.collection.findOne({ _id: new ObjectId(product.id) })
     }
 
     async get(id: string): Promise<ProductModel | null> {

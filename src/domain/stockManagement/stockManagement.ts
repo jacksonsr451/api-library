@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb"
 import ProductAlreadyExistsInStockError from "./errors/productAlreadyExistsInStockError"
 import ProductNotFoundInStockError from "./errors/productNotFoundInStockError"
 import Product from "./product"
@@ -10,11 +11,19 @@ class StockManagement {
     }
 
     addProduct(product: Product): Product {
-        if (this.isProductAlreadyExists(product.id)) {
+        if (this.isProductAlreadyExists(product.id ?? "")) {
             throw new ProductAlreadyExistsInStockError()
         }
-        this.stock.push(product)
-        return product
+
+        const newProduct: Product = {
+            id: this.getId(),
+            name: product.name,
+            quantity: product.quantity,
+            price: product.price,
+        }
+
+        this.stock.push(newProduct)
+        return newProduct
     }
 
     removeProduct(productId: string): Product {
@@ -51,6 +60,10 @@ class StockManagement {
 
     getProducts(): Product[] {
         return this.stock
+    }
+
+    private getId(): string {
+        return new ObjectId().toHexString()
     }
 
     private isProductAlreadyExists(productId: string): boolean {

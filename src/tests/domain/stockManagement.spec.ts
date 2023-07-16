@@ -17,7 +17,6 @@ describe("StockManagement", () => {
 
     it("should add a product to the stock", () => {
         const product: Product = {
-            id: "3",
             name: "Product 3",
             quantity: 3,
             price: 14.99,
@@ -25,11 +24,13 @@ describe("StockManagement", () => {
 
         const addedProduct = stockManagement.addProduct(product)
 
-        expect(addedProduct).toEqual(product)
+        expect(addedProduct.id).toBeDefined()
+        expect(addedProduct.name).toEqual(product.name)
+        expect(addedProduct.quantity).toEqual(product.quantity)
+        expect(addedProduct.price).toEqual(product.price)
 
         const updatedStock = stockManagement.getProducts()
         expect(updatedStock.length).toBe(products.length)
-        expect(updatedStock[updatedStock.length - 1]).toEqual(product)
     })
 
     it("should throw an error when adding a product that already exists in the stock", () => {
